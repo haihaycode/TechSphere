@@ -11,7 +11,7 @@
     <groupId>com.example</groupId>
     <artifactId>TechSphere</artifactId>
     <version>0.0.1-SNAPSHOT</version>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <name>TechSphere</name>
     <description>TechSphere</description>
     <properties>
@@ -57,7 +57,7 @@
                 <configuration>
                     <excludes>
                         <exclude>
-                            <groupId>org.projectlombok</groupId>
+                            <groupId>org.project-lombok</groupId>
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
