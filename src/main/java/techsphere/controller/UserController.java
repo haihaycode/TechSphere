@@ -8,6 +8,7 @@ import techsphere.service.UserService;
 import java.util.List;
 
 @RestController
+@CrossOrigin(origins = "http://localhost:8080")
 @RequestMapping("/api/users")
 public class UserController {
 
