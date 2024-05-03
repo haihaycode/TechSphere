@@ -19,12 +19,18 @@ public class Post {
     @Column(nullable = false)
     private String title;
 
-    @Column(nullable = false)
+    @Column(nullable = false,columnDefinition = "TEXT")
+    private String image;
+
+    @Column(nullable = false,columnDefinition = "TEXT")
+    private String description;
+
+    @Column(nullable = false,columnDefinition = "TEXT")
     private String content;
 
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "author_id", nullable = false)
-    private User author;
+//    @ManyToOne(fetch = FetchType.EAGER)
+    @Column(name = "author_id", nullable = false)
+    private int author;
 
     @Column(nullable = false)
     private Date createdAt;
@@ -34,5 +40,17 @@ public class Post {
 
     @Column(nullable = false)
     private boolean isActive;
+
+    @Column(nullable = true)
+    private String tags;
+
+    @Column(nullable = true)
+    private String views ;
+
+    // Thêm các trường mới
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinColumn(name = "category_id") // Ánh xạ với khóa ngoại của bảng Category
+    private Category category;
+
 
 }
