@@ -2,9 +2,11 @@ package techsphere.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import techsphere.Utils.TimeUtils;
 import techsphere.entity.Post;
 import techsphere.repository.PostRepository;
 
+import java.util.Collections;
 import java.util.Date;
 import java.util.List;
 
@@ -21,11 +23,14 @@ public class PostService {
 
     // Phương thức để lấy danh sách tất cả các bài viết
     public List<Post> getAllPosts() {
-        return postRepository.findAll();
+        List<Post> allPosts = postRepository.findAll();
+        Collections.reverse(allPosts); // Đảo ngược danh sách
+        return allPosts;
     }
 
     // Phương thức để lấy một bài viết theo ID
     public Post getPostById(int id) {
+
         return postRepository.findById(id).orElse(null);
     }
 

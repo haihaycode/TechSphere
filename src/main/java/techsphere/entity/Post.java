@@ -47,9 +47,9 @@ public class Post {
     @Column(nullable = true)
     private String views ;
 
-    // Thêm các trường mới
+
     @ManyToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "category_id") // Ánh xạ với khóa ngoại của bảng Category
+    @JoinColumn (name = "category_id",nullable = true) // Ánh xạ với khóa ngoại của bảng Category
     private Category category;
 
 
