@@ -4,12 +4,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.core.io.Resource;
 import org.springframework.core.io.ResourceLoader;
+import org.springframework.core.io.UrlResource;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
+import techsphere.Utils.CharacterUtils;
 
 import java.io.IOException;
+import java.net.MalformedURLException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -22,8 +25,14 @@ public class ImageService {
     @Autowired
     private ResourceLoader resourceLoader;
 
-    public ResponseEntity<Resource> getImage(String image) {
-        Resource resource = resourceLoader.getResource("classpath:/images/posts/" + image);
+    public ResponseEntity<Resource> getImage(String imageName) {
+        Path imagePath = Paths.get(UPLOAD_DIR, imageName);
+        Resource resource = null;
+        try {
+            resource = new UrlResource(imagePath.toUri());
+        } catch (MalformedURLException e) {
+            throw new RuntimeException(e);
+        }
         if (!resource.exists()) {
             return ResponseEntity.notFound().build();
         }
@@ -31,7 +40,7 @@ public class ImageService {
     }
 
 
-    public String uploadImage(MultipartFile file) {
+    public String uploadImage(MultipartFile file ) {
         try {
             // Tạo đường dẫn lưu trữ
             Path uploadPath = Paths.get(UPLOAD_DIR);
@@ -40,7 +49,7 @@ public class ImageService {
             }
 
             // Lưu ảnh vào thư mục lưu trữ
-            String fileName = file.getOriginalFilename();
+            String fileName = CharacterUtils.removeSpecialCharacters(file.getOriginalFilename());
             Path filePath = uploadPath.resolve(fileName);
             Files.copy(file.getInputStream(), filePath, StandardCopyOption.REPLACE_EXISTING);
 
